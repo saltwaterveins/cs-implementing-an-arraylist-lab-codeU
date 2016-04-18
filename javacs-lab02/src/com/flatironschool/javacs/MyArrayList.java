@@ -61,8 +61,12 @@ public class MyArrayList<E> implements List<E> {
 	public void add(int index, E element) {
 		if (index < 0 || index > size) {
 			throw new IndexOutOfBoundsException();
-		}
-		// TODO: fill in the rest of this method
+		}		
+		for( int i = size; i > index; i-- )
+            array[i] = array[i - 1];
+        
+        array[index] = element;
+        size++;  
 	}
 
 	@Override
@@ -110,9 +114,32 @@ public class MyArrayList<E> implements List<E> {
 	}
 
 	@Override
+	
+	/*
+	 * java.lang.NullPointerException
+  		at com.flatironschool.javacs.MyArrayList.indexOf(MyArrayList.java:126)
+ 		at com.flatironschool.javacs.MyArrayList.contains(MyArrayList.java:95)
+	 */
 	public int indexOf(Object target) {
 		// TODO: fill in this method
-		return 0;
+		/*for (int i = 0; i < size; i++) {
+		      if (target.equals(array[i])) return i;
+		      else if (target == null) {
+		    		  if (array[i] == null) return i;
+		    	  }
+		      }
+
+		    return -1;*/
+		if (target == null){
+			for (int i=0; i < size; i++) {
+				if( array[i] == null) return i;
+			} 
+		}else{
+				for (int i=0; i < size; i++){
+			if (target.equals(array[i])) return i;
+			 }
+		}
+		return -1;
 	}
 
 	/** Checks whether an element of the array is the target.
@@ -183,7 +210,14 @@ public class MyArrayList<E> implements List<E> {
 	@Override
 	public E remove(int index) {
 		// TODO: fill in this method.
-		return null;
+		E removed = array[index];
+        
+        for(int i = index; i < size( ) - 1; i++)
+            array[ i ] = array[ i + 1 ];
+        
+        size--;    
+        
+        return removed;
 	}
 
 	@Override
@@ -203,7 +237,12 @@ public class MyArrayList<E> implements List<E> {
 	@Override
 	public E set(int index, E element) {
 		// TODO: fill in this method.
-		return null;
+		if (index < 0 || index >= size) {
+				throw new IndexOutOfBoundsException();
+		}
+		E first = array[index];    
+        array[index] = element;
+        return first;
 	}
 
 	@Override
